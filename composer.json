@@ -1,0 +1,21 @@
+{
+    "name": "adupuy/cd-queue",
+    "description": "Paquete para organizar y ayudar a procesar cola de procesos",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Adupuy\\cdqueue\\": "src/",
+            "Adupuy\\cdqueue\\Test\\": "Test/"
+        }
+    },
+    "authors": [
+        {
+            "name": "adupuy"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.1/phpunit.xsd"
+         colors="true"
+         beStrictAboutOutputDuringTests="true">
+    <testsuites>
+        <testsuite name="Default Test Suite">
+            <directory>Test/</directory>
+        </testsuite>
+    </testsuites>
+    <coverage>
+        <report>
+            <clover outputFile="coverage-report/clover.xml"/>
+            <html outputDirectory="coverage-report/html"/>
+            <text outputFile="coverage-report/coverage.txt" showUncoveredFiles="true"/>
+            <xml outputDirectory="coverage-report/xml"/>
+        </report>
+    </coverage>
+</phpunit>
