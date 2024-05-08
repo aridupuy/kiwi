@@ -1,3 +1,4 @@
+.idea
 src/DB/Sqlite3/Queue.sqlite
 .phpunit.result.cache
 vendor
