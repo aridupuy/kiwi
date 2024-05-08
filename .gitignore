@@ -1,0 +1,4 @@
+DB/Sqlite3/Queue.sqlite
+.phpunit.result.cache
+vendor
+
