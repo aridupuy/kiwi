@@ -8,7 +8,7 @@ class FakeWorker extends AbstractWorker
 {
     public static $receiveParams;
 
-    public function execute(?array $params)
+    public function execute($params = null)
     {
         self::$receiveParams = $params;
         return true;

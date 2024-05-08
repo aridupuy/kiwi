@@ -86,7 +86,7 @@ class Queue
         }
         $parameters->set();
     }
-    private static function processParams(Cola $cola): ?array {
+    private static function processParams(Cola $cola) {
         $result = $cola->obtainRelation("Parameters", "idQueue", $cola->getId());
         $variables = null;
         while ($param = $result->fetchArray(SQLITE3_ASSOC)) {
@@ -101,6 +101,8 @@ class Queue
                     $variables[] = $var;
                 }
         }
+        if(count($variables)==1)
+            return $variables[0];
         return $variables;
     }
 

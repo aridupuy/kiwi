@@ -2,6 +2,6 @@
 namespace Adupuy\cdqueue\Interfaces;
 interface Worker
 {
-    public function execute(?array $params);
+    public function execute($params = null);
 
 }

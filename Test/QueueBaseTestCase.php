@@ -11,7 +11,6 @@ class QueueBaseTestCase extends DBBaseTestCase
         {
             $queue = parent::mockQueue();
             $params = parent::mockParameters($objects);
-            var_dump($params->set());
             return $queue;
         }
 

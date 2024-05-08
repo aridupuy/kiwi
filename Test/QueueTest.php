@@ -42,11 +42,16 @@ class QueueTest extends QueueBaseTestCase
 
     public function testExecuteQueueWhenUseObjectParameter()  {
         $mockWorker = $this->mockWorker();
-        $expectedParams = [1,2,3,4,5];
-        Queue::add("FakeJob", $expectedParams);
+        $expectedObject = new StdClass();
+        $expectedObject->cosa1 = 1;
+        $expectedObject->cosa2 = 2;
+        $expectedObject->cosa3 = 3;
+        $expectedObject->cosa4 = 4;
+        $expectedObject->cosa5 = 5;
+        Queue::add("FakeJob", $expectedObject);
         Queue::registerWorker("FakeJob", $mockWorker);
         Queue::run();
-        $this->assertEquals($expectedParams, FakeWorker::$receiveParams);
+        $this->assertEquals($expectedObject, FakeWorker::$receiveParams);
     }
 
     private function countRelations($relations): int {
