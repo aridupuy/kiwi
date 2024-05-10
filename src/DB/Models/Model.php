@@ -24,8 +24,9 @@ class Model
         $table = (new \ReflectionClass($this))->getShortName();
         $methods = array_map(
                 function($method) {
-                    if(substr($method->name, 0 ,3) == self::PREFIJO_GETTERS and strlen($method->name) > self::PREFIJO_GETTERS)
-                        return str_replace(self::PREFIJO_GETTERS,"", $method->name);
+                    if(substr($method->name, 0 ,3) == self::PREFIJO_GETTERS and strlen($method->name) > strlen(self::PREFIJO_GETTERS)) {
+                        return str_replace(self::PREFIJO_GETTERS, "", $method->name);
+                    }
                 }
                 ,(new \ReflectionClass($this))->getMethods(\ReflectionMethod::IS_FINAL)
         );
