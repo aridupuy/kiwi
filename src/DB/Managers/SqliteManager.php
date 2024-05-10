@@ -10,7 +10,9 @@ class SqliteManager {
     private function singleton () {
         if(!empty($this->db))
             return $this->db;
-        $this->db = new SQLite3(getcwd().'/src/DB/Sqlite3/Queue.sqlite');
+        var_dump(__DIR__.'/../Sqlite3/Queue.sqlite');
+        $this->db = new SQLite3(__DIR__.'/../Sqlite3/Queue.sqlite');
+        var_dump(file_exists(__DIR__.'/../Sqlite3/Queue.sqlite'));
         if(!$this->validate())
             $this->migrate();
         return $this->db;
