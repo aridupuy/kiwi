@@ -13,7 +13,7 @@ class Model
     private SQLite3 $db;
     private static $transaccion_actual = 0;
     private static $transaccionFallida = false;
-    public function __construct(array $params = null)
+    public function __construct($params = false)
     {
         $this->db = DBManager::getConection();
         $this->init($params);

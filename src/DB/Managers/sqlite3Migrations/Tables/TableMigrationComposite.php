@@ -18,7 +18,8 @@ class TableMigrationComposite
     private function composeMigrations(Sqlite3 $db) {
         return [
             new Queue($db),
-            new Params($db)
+            new Params($db),
+            new Operation($db)
         ];
     }
 

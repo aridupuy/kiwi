@@ -17,7 +17,7 @@ class Queue extends AbstractTableMigration
         return "CREATE TABLE Queue (
         Id INTEGER PRIMARY KEY AUTOINCREMENT,
         Name TEXT NOT NUll,
-        Fecha REAL DEFAULT CURRENT_TIMESTAMP NOT NULL,
+        Fecha TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
         Semaphore INTEGER DEFAULT 0 NOT NULL
     );
 ";
