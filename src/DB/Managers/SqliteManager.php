@@ -11,6 +11,7 @@ class SqliteManager {
         if(!empty($this->db))
             return $this->db;
         $this->db = new SQLite3(__DIR__.'/../Sqlite3/Queue.sqlite');
+        chmod(__DIR__.'/../Sqlite3/Queue.sqlite', 0777);
         if(!$this->validate())
             $this->migrate();
         return $this->db;

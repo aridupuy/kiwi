@@ -18,7 +18,9 @@ class Queue extends AbstractTableMigration
         Id INTEGER PRIMARY KEY AUTOINCREMENT,
         Name TEXT NOT NUll,
         Fecha TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
-        Semaphore INTEGER DEFAULT 0 NOT NULL
+        Semaphore INTEGER DEFAULT 0 NOT NULL,
+        ErrorMessage TEXT,
+        Ejecuciones INTEGER DEFAULT 0 NOT NULL,
     );
 ";
     }

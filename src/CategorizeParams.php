@@ -18,7 +18,7 @@ class CategorizeParams {
         $parameters->setIdQueue($queue->getId());
         switch (true) {
             case is_object($object) :
-                $parameters->setParam(serialize($object));
+                $parameters->setParam(base64_encode(serialize($object)));
                 break;
             case is_array($object) :
                 $parameters->setParam(json_encode($object));
@@ -37,10 +37,10 @@ class CategorizeParams {
             $parameters = new Parameters($param);
             $var = $parameters->getParam();
             if(!is_numeric($var) and is_array(json_decode($var, true))) {
-                $variables[] = new ArrayParam(json_decode($var));
+                $variables[] = new ArrayParam(json_decode($var, true));
             }
             else {
-                $object = @unserialize($var);
+                $object = @unserialize(base64_decode($var));
                 if(!empty($object))
                     $variables[] = new ObjectParam($object);
                 else

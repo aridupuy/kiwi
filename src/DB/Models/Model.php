@@ -31,7 +31,12 @@ class Model
                 ,(new \ReflectionClass($this))->getMethods(\ReflectionMethod::IS_FINAL)
         );
         $metodoId = "set".static::$id_tabla;
-        $this->$metodoId($this->generar_id_maximo(static::$id_tabla, $table));
+        $getmetodoId = "get".static::$id_tabla;
+        $isUpdate = false;
+        if(empty($this->$getmetodoId()))
+            $this->$metodoId($this->generar_id_maximo(static::$id_tabla, $table));
+        else
+            $isUpdate = true;
         foreach ($methods as $param) {
             if(empty($param))
                 continue;
@@ -44,12 +49,29 @@ class Model
         }
         $values = implode(", ",$keys);
         $params =implode(", ",$parametros);
-        $sql = "INSERT INTO {$table} ({$params}) VALUES ({$values})";
-        $prepare = $this->db->prepare($sql);
-        foreach ($parametros as $key =>$param) {
-            $prepare->bindParam($key, $valores[$key]);
+        if(!$isUpdate) {
+            $sql = "INSERT INTO {$table} ({$params}) VALUES ({$values})";
+            $prepare = $this->db->prepare($sql);
+            foreach ($parametros as $key =>$param) {
+                $prepare->bindParam($key, $valores[$key]);
+            }
+            return $prepare->execute();
         }
-        return $prepare->execute();
+        else {
+            $id_tabla = static::$id_tabla;
+
+            foreach ($parametros as $key=> $item) {
+                $update[] = "$item = $key";
+            }
+            $update = implode(", ", $update);
+            $sql = "UPDATE {$table} SET {$update} WHERE {$id_tabla} = :Id";
+            $prepare = $this->db->prepare($sql);
+            foreach ($parametros as $key =>$param) {
+                $prepare->bindParam($key, $valores[$key]);
+            }
+            return $prepare->execute();
+        }
+
     }
 
     public function get($id) {

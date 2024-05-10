@@ -7,6 +7,8 @@ use Adupuy\cdqueue\DB\Models\Model;
 use Adupuy\cdqueue\DB\Models\Operation;
 use \Adupuy\cdqueue\DB\Models\Queue as Cola;
 use Adupuy\cdqueue\Parameters\AbstractParam;
+use Dompdf\Exception;
+use PHPUnit\Framework\Error;
 
 
 class Queue
@@ -15,6 +17,9 @@ class Queue
     private static $workers;
     const MAX_PER_DEPH = 1000;
     private static $offset;
+    private static $operacion;
+    private static $idsAliberar;
+
     public function __construct()
     {
         DBManager::getConection();
@@ -70,6 +75,7 @@ class Queue
         if(!$operation->set()) {
             return false;
         }
+        self::$operacion = $operation;
 
         self::$offset = $queueLastOperation->getDesde() > 0 ? $queueLastOperation->getDesde()+ self::MAX_PER_DEPH : 0;
         /*tomar cola*/
@@ -77,20 +83,36 @@ class Queue
         $queueToProcess = self::extractData($result);
         /*semaforizar cola*/
         self::tomarSemaforo();
-        $idsALiberar = [];
+        self::$idsAliberar = [];
+
+        foreach ($queueToProcess as $queue) {
+            self::$idsAliberar[] = $queue["Id"];
+        }
 
         foreach ($queueToProcess as $command) {
             $cola = new Cola($command);
+
             $worker = self::$workers[$cola->getName()];
             $params = self::processParams($cola);
-            if($worker->execute($params)){
-                $cola->delete($cola->getId());
+            try {
+                if($worker->execute($params)){
+                    $cola->delete($cola->getId());
+                    $cola->deleteParams($cola->getId());
+                }
+                else{
+                    $cola->setErrormessage($worker->getErrorMessage());
+                    $cola->setEjecuciones($cola->getEjecuciones()+1);
+                    $cola->set();
+                }
+            } catch (\Exception $e ){
+                error_log($e->getMessage());
+                continue;
+            } catch (\Error $e) {
+                error_log($e->getMessage());
+                continue;
             }
-            else
-                $idsALiberar[] = $cola->getId();
         }
-        self::liberarSemaforo($idsALiberar);
-        self::liberarOperacion($operation);
+        return true;
     }
 
     private static function extractData ($data): array {
@@ -106,12 +128,14 @@ class Queue
         Semaphore::tomarSemaforo($offset, $max);
     }
 
-    private static function liberarSemaforo(array $idsALiberar): void {
-        Semaphore::liberarSemaforo($idsALiberar);
+    public static function liberarSemaforo(): void {
+        Semaphore::liberarSemaforo(self::$idsAliberar);
     }
 
-    private static function liberarOperacion(Operation $operation): void {
-        $operation->delete($operation->getIdOperation());
+    public static function liberarOperacion(): void {
+        if(empty(self::$operacion))
+            return;
+        self::$operacion->delete(self::$operacion->getIdOperation());
     }
     private static function getLastOperation(): Operation {
         return Operation::getLastOperation();
@@ -127,6 +151,22 @@ class Queue
 
     private static function getProcessQueue(int $max): \SQLite3Result {
         $offset = self::$offset;
-        return DBManager::getConection()->query("SELECT * FROM Queue where Semaphore = false LIMIT $max OFFSET $offset");
+        $ejecuciones = Semaphore::MAX_EXECUTION;
+        return DBManager::getConection()->query("SELECT * FROM Queue where Semaphore = false and Ejecuciones < $ejecuciones LIMIT $max OFFSET $offset");
     }
 }
+
+
+register_shutdown_function(function() {
+    echo "Terminando libero disponibilidad";
+    Queue::liberarSemaforo();
+    Queue::liberarOperacion();
+});
+
+set_exception_handler(function (...$string) {
+    echo "Terminando libero por error";
+    var_dump($string);
+    Queue::liberarSemaforo();
+    Queue::liberarOperacion();
+    exit();
+});

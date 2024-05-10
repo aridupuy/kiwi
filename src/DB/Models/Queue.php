@@ -2,6 +2,8 @@
 
 namespace Adupuy\cdqueue\DB\Models;
 
+use Adupuy\cdqueue\DB\DBManager;
+
 class Queue extends Model {
     static $id_tabla = "id";
 
@@ -9,6 +11,8 @@ class Queue extends Model {
     private $name;
     private $fecha;
     private $semaphore;
+    private $errormessage;
+    private $Ejecuciones;
 
     /**
      * @return mixed
@@ -82,4 +86,40 @@ class Queue extends Model {
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    final public function getErrormessage()
+    {
+        return $this->errormessage;
+    }
+
+    /**
+     * @param mixed $errormessage
+     */
+    public function setErrormessage($errormessage)
+    {
+        $this->errormessage = $errormessage;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    final public function getEjecuciones()
+    {
+        return $this->Ejecuciones;
+    }
+
+    /**
+     * @param mixed $Ejecuciones
+     */
+    public function setEjecuciones($Ejecuciones): void
+    {
+        $this->Ejecuciones = $Ejecuciones;
+    }
+
+    public function deleteParams( $idQueue) {
+        DBManager::getConection()->exec("DELETE FROM Parameters where idQueue = $idQueue");
+    }
 }
