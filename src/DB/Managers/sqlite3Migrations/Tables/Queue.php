@@ -20,7 +20,7 @@ class Queue extends AbstractTableMigration
         Fecha TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
         Semaphore INTEGER DEFAULT 0 NOT NULL,
         ErrorMessage TEXT,
-        Ejecuciones INTEGER DEFAULT 0 NOT NULL,
+        Ejecuciones INTEGER DEFAULT 0 NOT NULL
     );
 ";
     }

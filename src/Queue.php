@@ -59,6 +59,11 @@ class Queue
         self::$workers[$name] = $worker;
     }
 
+    public static function registerInformation()
+    {
+
+    }
+
     /*metoo para desregistrar workers*/
     public static function deleteWorker($name): void {
         unset(self::$workers[$name]);
