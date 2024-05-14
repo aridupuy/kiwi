@@ -163,14 +163,14 @@ class Queue
 
 
 register_shutdown_function(function() {
-    echo "Terminando libero disponibilidad";
+    error_log( "Terminando libero disponibilidad");
     Queue::liberarSemaforo();
     Queue::liberarOperacion();
 });
 
 set_exception_handler(function (...$string) {
-    echo "Terminando libero por error";
-    var_dump($string);
+    error_log( "Terminando libero por error");
+
     Queue::liberarSemaforo();
     Queue::liberarOperacion();
     exit();

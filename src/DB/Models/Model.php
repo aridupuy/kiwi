@@ -19,7 +19,7 @@ class Model
         $this->init($params);
     }
 
-    public function set()
+    public function set($forceInsert = false)
     {
         $table = (new \ReflectionClass($this))->getShortName();
         $methods = array_map(
@@ -49,7 +49,7 @@ class Model
         }
         $values = implode(", ",$keys);
         $params =implode(", ",$parametros);
-        if(!$isUpdate) {
+        if(!$isUpdate or $forceInsert) {
             $sql = "INSERT INTO {$table} ({$params}) VALUES ({$values})";
             $prepare = $this->db->prepare($sql);
             foreach ($parametros as $key =>$param) {

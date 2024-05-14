@@ -114,9 +114,10 @@ class Queue extends Model {
     /**
      * @param mixed $Ejecuciones
      */
-    public function setEjecuciones($Ejecuciones): void
+    public function setEjecuciones($Ejecuciones): self
     {
         $this->Ejecuciones = $Ejecuciones;
+        return $this;
     }
 
     public function deleteParams( $idQueue) {

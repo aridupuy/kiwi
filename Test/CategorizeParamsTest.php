@@ -16,7 +16,7 @@ class CategorizeParamsTest extends QueueBaseTestCase {
         $expectedObject->cosa3 = 3;
         $expectedObject->cosa4 = 4;
         $expectedObject->cosa5 = 5;
-        yield[$expectedObject, 'O:8:"stdClass":5:{s:5:"cosa1";i:1;s:5:"cosa2";i:2;s:5:"cosa3";i:3;s:5:"cosa4";i:4;s:5:"cosa5";i:5;}'];
+        yield[$expectedObject, base64_encode(serialize($expectedObject))];
         yield[1, 1];
         yield["fake", "fake"];
         yield[["cosa1"=>1,"cosa2"=>2,"cosa3"=>3], '{"cosa1":1,"cosa2":2,"cosa3":3}'];

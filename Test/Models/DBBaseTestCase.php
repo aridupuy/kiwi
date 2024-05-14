@@ -27,6 +27,8 @@ class DBBaseTestCase extends TestCase
         return $queue->setSemaphore(false)
         ->setName("FakeJob")
         ->setFecha("2024-04-01")
+        ->setEjecuciones(0)
+        ->setErrormessage("")
         ->setId(1);
 
     }

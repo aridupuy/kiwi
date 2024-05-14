@@ -14,9 +14,9 @@ class ModelTest extends DBBaseTestCase
         $this->assertNotEmpty($result);
     }
 
-    public function testGet() {
+    public function testGetCreatingNewQueueRegister() {
         $newQueue = $this->mockQueue();
-        $newQueue->set();
+        $newQueue->set(true);
         $queue = new Queue();
         $queue->get($newQueue->getId());
 
@@ -26,7 +26,6 @@ class ModelTest extends DBBaseTestCase
     public function testGetWithNotExists() {
         $queue = new Queue();
         $queue->get(-1);
-
         $this->assertNull($queue->getId());
     }
 
