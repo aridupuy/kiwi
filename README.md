@@ -5,7 +5,7 @@ Sirve para crear procesos encolados, guardar los parametros necesarios y ejecuta
 
 ## Instalación
 
-Se debe clonar el paquete desde aqui [cd-queue](https://git.cobrodigital.com/equipo-de-desarrollo-de-efectivo-digital/cd-queue.git)
+Se debe clonar el paquete desde aqui [cd-queue](https://github.com/aridupuy/kiwi/)
 
     git clone git@github.com:aridupuy/kiwi.git
     
