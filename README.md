@@ -7,7 +7,7 @@ Sirve para crear procesos encolados, guardar los parametros necesarios y ejecuta
 
 Se debe clonar el paquete desde aqui [cd-queue](https://git.cobrodigital.com/equipo-de-desarrollo-de-efectivo-digital/cd-queue.git)
 
-    git clone https://git.cobrodigital.com/equipo-de-desarrollo-de-efectivo-digital/cd-queue.git
+    git clone git@github.com:aridupuy/kiwi.git
     
 o se puede tambien agregar a composer
 * Primero se debe agregar al archivo composer.json del proyecto 
