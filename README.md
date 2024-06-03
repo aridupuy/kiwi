@@ -30,7 +30,7 @@ o se puede tambien agregar a composer
    ```json
    {
         "http-basic": {
-            "git.cobrodigital.com": {
+            "github.com": {
                 "username": "tu_usuario",
                 "password": "tu_contraseña"
             }
