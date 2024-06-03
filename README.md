@@ -18,7 +18,7 @@ o se puede tambien agregar a composer
       "repositories": [
           {
             "type": "vcs",
-            "url": "https://git.cobrodigital.com/equipo-de-desarrollo-de-efectivo-digital/cd-queue.git^"
+            "url": "git@github.com:aridupuy/kiwi.git^"
           }
     ]
   ```
